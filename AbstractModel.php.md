@@ -1,4 +1,16 @@
 # AbstractModel
+```
+- Metodos:
+ - find(int)
+ - findBy(array)
+ - findOneBy(array)
+ - findAll()
+ - update(int, array)
+ - delete(int, array)
+ - deleteBy(array)
+ - updateBy(array)
+ - queryBuilder(array)
+```
 ### La variable "criteria" es un array con la siguiente estructura:
 ```
 $criteria = ['key' => 'value'];
