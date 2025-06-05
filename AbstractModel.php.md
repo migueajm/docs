@@ -1,15 +1,15 @@
 # AbstractModel
 ```
 - Metodos:
- - find(int)
- - findBy(array)
- - findOneBy(array)
+ - find(id)
+ - findBy(criteria)
+ - findOneBy(criteria)
  - findAll()
- - update(int, array)
- - delete(int, array)
- - deleteBy(array)
- - updateBy(array)
- - queryBuilder(array)
+ - update(id, entity)
+ - delete(id)
+ - deleteBy(criteria)
+ - updateBy(entity, criteria)
+ - queryBuilder(options)
 ```
 ### La variable "criteria" es un array con la siguiente estructura:
 ```
