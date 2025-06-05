@@ -1,5 +1,8 @@
 # AbstractModel
 ```
+/**
+ * @throws DatabaseException
+**/
 - Metodos:
  - find(id)
  - findBy(criteria)
