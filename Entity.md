@@ -1,7 +1,7 @@
 # Entity
 
 ## Son clases que definen la estructura de una tabla.
-```
+```php
 class User extends AbstractModel
 {
   const _schema = 'public';
