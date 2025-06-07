@@ -15,8 +15,8 @@
 	- Fluidez: Navegación sin recarga completa.
 	- Componentización: División de la UI en bloques reutilizables.
 - Filosofía API-first: el backend como proveedor de datos, el frontend como consumidor independiente.
- - Symfony se convierte en un proveedor de datos(API RESful o GraphQL).
- - Vue es completamente independiente y se conecta vía HTTP para consumir datos.
+	- Symfony se convierte en un proveedor de datos(API RESful o GraphQL).
+	- Vue es completamente independiente y se conecta vía HTTP para consumir datos.
 ```
 2. Diseño de Arquitectura Separada
 ```
@@ -26,11 +26,11 @@
 - Comunicación mediante HTTP (Axios / Fetch), uso de JWT o OAuth2 para autenticación.
 
 - CORS, headers y seguridad entre dominios.
- - Configurar CORS para permitir solicitudes entre dominios distintos.
- - Asegurar headers (como Authorization), CSRF (si aplica), rate limiting, etc.
+	- Configurar CORS para permitir solicitudes entre dominios distintos.
+	- Asegurar headers (como Authorization), CSRF (si aplica), rate limiting, etc.
 - Deploy desacoplado: Symfony en un dominio/subdominio y Vue en otro.
- - Symfony corre en api.dominio.com, Vue en app.dominio.com.
- - Esto permite escalar, cachear y administrar de forma independiente.
+	- Symfony corre en api.dominio.com, Vue en app.dominio.com.
+	- Esto permite escalar, cachear y administrar de forma independiente.
 ```
 3. Backend con Symfony (API pura)
 ```
