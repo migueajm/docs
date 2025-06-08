@@ -96,7 +96,11 @@ function openModal() {
 ```
 ###  Computed Caching vs. Methods
 ```js
-// Computed Caching vs. Methods: En cuanto al resultado final, ambos enfoques son idénticos. Sin embargo, la diferencia radica en que las propiedades calculadas se almacenan en caché según sus dependencias reactivas. Una propiedad calculada solo se reevaluará cuando algunas de sus dependencias reactivas hayan cambiado. Esto significa que, siempre que author.booksno haya cambiado, el acceso múltiple a publishedBooksMessagedevolverá inmediatamente el resultado calculado previamente sin tener que volver a ejecutar la función getter.
+// Computed Caching vs. Methods: En cuanto al resultado final, ambos enfoques son idénticos.
+Sin embargo, la diferencia radica en que las propiedades calculadas se almacenan en caché según sus dependencias reactivas.
+Una propiedad calculada solo se reevaluará cuando algunas de sus dependencias reactivas hayan cambiado.
+Esto significa que, siempre que author.booksno haya cambiado, el acceso múltiple a publishedBooksMessagedevolverá
+inmediatamente el resultado calculado previamente sin tener que volver a ejecutar la función getter.
 
 computed: {
 	// a computed getter
