@@ -76,6 +76,42 @@ data() {
 
 <div :id="`list-${id}`"></div>
 
+// **nextTick** si necesitas hacer algo después de que el DOM se haya actualizado, usas await nextTick().
+import { ref, nextTick } from 'vue'
+
+const show = ref(false)
+
+function openModal() {
+  show.value = true
+
+  // Aquí el DOM aún no se ha actualizado, el modal todavía no está presente
+  await nextTick()
+
+  // Ahora puedes acceder al modal en el DOM, hacer focus, scroll, etc.
+  const modal = document.querySelector('#myModal')
+  modal?.focus()
+}
+// Computed Caching vs. Methods: En cuanto al resultado final, ambos enfoques son idénticos. Sin embargo, la diferencia radica en que las propiedades calculadas se almacenan en caché según sus dependencias reactivas. Una propiedad calculada solo se reevaluará cuando algunas de sus dependencias reactivas hayan cambiado. Esto significa que, siempre que author.booksno haya cambiado, el acceso múltiple a publishedBooksMessagedevolverá inmediatamente el resultado calculado previamente sin tener que volver a ejecutar la función getter.
+
+computed: {
+	// a computed getter
+	publishedBooksMessage() {
+		// `this` points to the component instance
+		return this.author.books.length > 0 ? 'Yes' : 'No'
+	}
+}
+<span>{{ publishedBooksMessage }}</span>
+
+methods: {
+  calculateBooksMessage() {
+    return this.author.books.length > 0 ? 'Yes' : 'No'
+  }
+}
+<p>{{ calculateBooksMessage() }}</p>
+
+```
+### Modificadores
+```js
 // Modificadores de eventos
 .stop
 .prevent
@@ -119,39 +155,4 @@ El .exact modificador permite controlar la combinación exacta de modificadores 
 <input v-model.lazy="msg" />
 .number
 .trim
-
-// **nextTick** si necesitas hacer algo después de que el DOM se haya actualizado, usas await nextTick().
-import { ref, nextTick } from 'vue'
-
-const show = ref(false)
-
-function openModal() {
-  show.value = true
-
-  // Aquí el DOM aún no se ha actualizado, el modal todavía no está presente
-  await nextTick()
-
-  // Ahora puedes acceder al modal en el DOM, hacer focus, scroll, etc.
-  const modal = document.querySelector('#myModal')
-  modal?.focus()
-}
-// Computed Caching vs. Methods: En cuanto al resultado final, ambos enfoques son idénticos. Sin embargo, la diferencia radica en que las propiedades calculadas se almacenan en caché según sus dependencias reactivas. Una propiedad calculada solo se reevaluará cuando algunas de sus dependencias reactivas hayan cambiado. Esto significa que, siempre que author.booksno haya cambiado, el acceso múltiple a publishedBooksMessagedevolverá inmediatamente el resultado calculado previamente sin tener que volver a ejecutar la función getter.
-
-computed: {
-	// a computed getter
-	publishedBooksMessage() {
-		// `this` points to the component instance
-		return this.author.books.length > 0 ? 'Yes' : 'No'
-	}
-}
-<span>{{ publishedBooksMessage }}</span>
-
-methods: {
-  calculateBooksMessage() {
-    return this.author.books.length > 0 ? 'Yes' : 'No'
-  }
-}
-<p>{{ calculateBooksMessage() }}</p>
-
-// Ciclo de vida de un componente
 ```
