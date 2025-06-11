@@ -36,7 +36,7 @@ app.mount('#app2');
 - v-on: Escucha eventos del DOM (<a v-on:click="doSomething"> ... </a> o <a @click="doSomething"> ... </a>)
 - v-show: similar a "v-if" pero el elemento siempre se procesa independientemente de la condición inicial, con alternancia basada en CSS.
 - v-for: Si se usa en conjunto con "v-if" este siempre se evaluara primero(No se recomienda usar v-if"y" v-foren el mismo elemento debido a la precedencia implícita) <li v-for="item in items"> o <li v-for="(item, index) in items"> o <div v-for="item of items"></div>, tambien se puede usar para iterar propiedades de un objeto <li v-for="value in myObject"> o <li v-for="(value, key) in myObject"> o <li v-for="(value, key, index) in myObject">
-- v-mode: sincroniza el valor de un input con el esstado de una variable
+- v-model: sincroniza el valor de un input con el esstado de una variable
 ```
 
 #### No se puede usar la interpolación dentro de los atributos HTML, para ello esta la directiva **v-bind**
@@ -163,4 +163,122 @@ El .exact modificador permite controlar la combinación exacta de modificadores 
 <input v-model.lazy="msg" />
 .number
 .trim
+```
+
+### watchers
+
+```js
+// metodo "watch" funciona directamente con "ref"
+/* 
+  El primer argumento puede ser distintos tipos de "fuentes" reactivas:
+  puede ser una referencia (incluidas las referencias calculadas),
+  un objeto reactivo, una función getter o una matriz de múltiples fuentes:
+*/
+const x = ref(0)
+const y = ref(0)
+
+// single ref
+watch(x, (newX) => {
+  console.log(`x is ${newX}`)
+})
+// getter
+watch(
+  () => x.value + y.value,
+  (sum) => {
+    console.log(`sum of x + y is: ${sum}`)
+  }
+)
+
+// array of multiple sources
+watch([x, () => y.value], ([newX, newY]) => {
+  console.log(`x is ${newX} and y is ${newY}`)
+})
+
+const obj = reactive({ count: 0 })
+
+// this won't work because we are passing a number to watch()
+watch(obj.count, (count) => {
+  console.log(`Count is: ${count}`)
+})
+
+// instead, use a getter:
+watch(
+  () => obj.count,
+  (count) => {
+    console.log(`Count is: ${count}`)
+  }
+)
+// Deep Watchers
+//Sin embargo, puedes forzar el segundo caso en un observador profundo usando explícitamente la "deep" opción:
+
+watch(
+  () => state.someObject,
+  (newValue, oldValue) => {
+    // Note: `newValue` will be equal to `oldValue` here
+    // *unless* state.someObject has been replaced
+  },
+  { deep: true }
+)
+
+// Eager Watchers
+
+watch(
+  source,
+  (newValue, oldValue) => {
+    // executed immediately, then again when `source` changes
+  },
+  { immediate: true }
+)
+
+//once watchers compatible con vue 3.4 +
+watch(
+  source,
+  (newValue, oldValue) => {
+    // when `source` changes, triggers only once
+  },
+  { once: true }
+)
+
+// watchEffect
+const todoId = ref(1)
+const data = ref(null)
+
+watch(
+  todoId,
+  async () => {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/todos/${todoId.value}`
+    )
+    data.value = await response.json()
+  },
+  { immediate: true }
+)
+
+watchEffect(async () => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/todos/${todoId.value}`
+  )
+  data.value = await response.json()
+})
+```
+
+### Template refs
+```js
+// Aatributo especial, similar al "key" de la directiva "v-for"
+<input ref="input">
+// acceso a las referencias
+<script setup>
+import { useTemplateRef, onMounted } from 'vue'
+
+// the first argument must match the ref value in the template
+const input = useTemplateRef('my-input')
+
+onMounted(() => {
+  input.value.focus()
+})
+</script>
+
+<template>
+  <input ref="my-input" />
+</template>
 ```
